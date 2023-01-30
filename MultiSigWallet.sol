@@ -2,6 +2,13 @@
 pragma solidity ^0.8.13;
 
 
+* MultiSig Wallet with a 2 out of 3 or 3 out of 4 number of confirmations required to execute a transaction. 
+* This contract implements functions for submitting, confirming, executing and revoking transactions, 
+
+* Also functions for checking transaction details, 
+* The contract also includes events to log various actions such as deposit, submit, confirm, revoke and execute transactions.
+
+
 contract MultiSigWallet {
     event Deposit(address indexed sender, uint amount, uint balance);
     event SubmitTransaction(
