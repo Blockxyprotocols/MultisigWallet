@@ -1,16 +1,23 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-
-* MultiSig Wallet with a 2 out of 3 or 3 out of 4 number of confirmations required to execute a transaction. 
-* This wallet implements functions for submitting, confirming, executing and revoking transactions, 
-* Also functions for checking transaction details, 
-* The contract also includes events to log various actions such as deposit, submit, confirm, revoke and execute transactions.
-
-
 contract MultiSigWallet {
-    event Deposit(address indexed sender, uint amount, uint balance);
-    event SubmitTransaction(
+  // The contract allows multiple owners to manage funds stored in the wallet, where a transaction must be confirmed by a set number of owners 
+  // defined in the numConfirmationsRequired variable) before it can be executed. 
+  // The contract implements the following functionality:
+  // Receiving funds (receive() function)
+  // Submitting a new transaction (submitTransaction(address _to, uint _value, bytes memory _data) function)
+  // Confirming a transaction (confirmTransaction(uint _txIndex) function)
+  // Revoking a confirmation for a transaction (revokeConfirmation(uint _txIndex) function)
+  // Executing a confirmed transaction (executeTransaction(uint _txIndex) function)
+  // Retrieving a list of owners (getOwners() function)
+  // Retrieving the number of transactions (getTransactionCount() function)
+  // Retrieving a specific transaction (getTransaction(uint _txIndex) function)
+  // The code also defines various events that can be triggered during contract execution, such as Deposit, 
+  // SubmitTransaction, ConfirmTransaction, RevokeConfirmation, ExecuteTransaction, GetLatestPrice, and UpdateLatestPrice.
+
+     event Deposit(address indexed sender, uint amount, uint balance);
+     event SubmitTransaction(
         address indexed owner,
         uint indexed txIndex,
         address indexed to,
@@ -20,10 +27,18 @@ contract MultiSigWallet {
     event ConfirmTransaction(address indexed owner, uint indexed txIndex);
     event RevokeConfirmation(address indexed owner, uint indexed txIndex);
     event ExecuteTransaction(address indexed owner, uint indexed txIndex);
+    event GetLatestPrice(address callerAddress, uint id);
+    event UpdateLatestPrice(address callerAddress, uint id);
+
+
+
 
     address[] public owners;
     mapping(address => bool) public isOwner;
     uint public numConfirmationsRequired;
+    uint currentPrice;
+    mapping(uint256=>bool) pendingRequests;
+
 
     struct Transaction {
         address to;
@@ -185,4 +200,13 @@ constructor(address[] memory _owners, uint _numConfirmationsRequired) {
             transaction.numConfirmations
         );
     }
-}
+
+  function updatePrice(uint256 _price) public {
+        currentPrice = _price;
+    }
+
+    function getCurrentPrice() public view returns (uint256) {
+        return currentPrice;
+    }
+
+ }
