@@ -5,7 +5,7 @@ import "./Factory.sol";
 import "./MultiSigWallet.sol";
 
 
-contract MultiSigWalletFactory is Factory 
+abstract contract MultiSigWalletFactory is Factory 
 {
 function create(address[] memory _owners, uint _required) public returns (address multisig_wallet) 
 
