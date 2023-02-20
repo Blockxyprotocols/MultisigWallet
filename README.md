@@ -1,3 +1,6 @@
+[Discord link] (https://discord.gg/MAavSRYw)
+[Telegram link] (https://t.me/+Cu7OHDnp3aozOTJk)
+
 #MultisigWallet + #Loan protocols + #NFT Fundraising = Blockxy
 
 Big Update coming arround
